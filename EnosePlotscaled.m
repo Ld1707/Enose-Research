@@ -1,0 +1,393 @@
+function [parameters] = EnosePlot(Data)
+t = Data(:,1);
+mq2 = Data(:,2);
+mq3 = Data(:,3);
+mq4 = Data(:,4);
+mq5 = Data(:,5);
+mq6 = Data(:,6);
+mq7 = Data(:,7);
+mq8 = Data(:,8);
+mq135 = Data(:,9);
+
+logt = log(Data(:,1));
+logmq2 = log(Data(:,2));
+logmq3 = log(Data(:,3));
+logmq4 = log(Data(:,4));
+logmq5 = log(Data(:,5));
+logmq6 = log(Data(:,6));
+logmq7 = log(Data(:,7));
+logmq8 = log(Data(:,8));
+logmq135 = log(Data(:,9));
+
+%cuts only rising portion of data:
+min2 = find(mq2 == min(mq2));
+cutmq2 = Data(min2(end):find(mq2 == max(mq2)),2);
+cmq2t = min2(end):(min2(end)+length(cutmq2)-1);
+pmq2 = para(cutmq2,cmq2t);
+
+min3 = find(mq3 == min(mq3));
+cutmq3 = Data(min3(end):find(mq3 == max(mq3)),3);
+cmq3t = min3(end):(min3(end)+length(cutmq3)-1);
+pmq3 = para(cutmq3,cmq3t);
+
+min4 = find(mq4 == min(mq4));
+cutmq4 = Data(min4(end):find(mq4 == max(mq4)),4);
+cmq4t = min4(end):(min4(end)+length(cutmq4)-1);
+pmq4 = para(cutmq4,cmq4t);
+
+min5 = find(mq5 == min(mq5));
+cutmq5 = Data(min5(end):find(mq5 == max(mq5)),5);
+cmq5t = min5(end):(min5(end)+length(cutmq5)-1);
+pmq5 = para(cutmq5,cmq5t);
+
+min6 = find(mq6 == min(mq6));
+cutmq6 = Data(min6(end):find(mq6 == max(mq6)),6);
+cmq6t = min6(end):(min6(end)+length(cutmq6)-1);
+pmq6 = para(cutmq6,cmq6t);
+
+min7 = find(mq7 == min(mq7));
+cutmq7 = Data(min7(end):find(mq7 == max(mq7)),7);
+cmq7t = min7(end):(min7(end)+length(cutmq7)-1);
+pmq7 = para(cutmq7,cmq7t);
+
+min8 = find(mq8 == min(mq8));
+cutmq8 = Data(min8(end):find(mq8 == max(mq8)),8);
+cmq8t = min8(end):(min8(end)+length(cutmq8)-1);
+pmq8 = para(cutmq8,cmq8t);
+
+min135 = find(mq135 == min(mq135));
+cutmq135 = Data(min135(end):find(mq135 == max(mq135)),9);
+cmq135t = min135(end):(min135(end)+length(cutmq135)-1);
+pmq135 = para(cutmq135,cmq135t);
+
+parameters = [pmq2
+    pmq3
+    pmq4
+    pmq5
+    pmq6
+    pmq7
+    pmq8
+    pmq135];
+
+%scales cut values to room ambience
+cutmq2 = cutmq2-min(mq2);
+cutmq3 = cutmq3-min(mq3);
+cutmq4 = cutmq4-min(mq4);
+cutmq5 = cutmq5-min(mq5);
+cutmq6 = cutmq6-min(mq6);
+cutmq7 = cutmq7-min(mq7);
+cutmq8 = cutmq8-min(mq8);
+cutmq135 = cutmq135-min(mq135);
+
+%each pmq# returns parameters of the equations
+%Volts = m*log(time)+ b
+%and
+%Volts = alpha*time^beta
+%as a vector [m,b,alpha,beta]
+
+
+% %plots regular full graphs
+% figure(1)
+% plot(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
+% title('All Lines');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+%
+% figure(2)
+% plot(t,mq2)
+% title('mq2');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(3)
+% plot(t,mq3)
+% title('mq3');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(4)
+% plot(t,mq4)
+% title('mq4');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(5)
+% plot(t,mq5)
+% title('mq5');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(6)
+% plot(t,mq6)
+% title('mq6');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(7)
+% plot(t,mq7)
+% title('mq7');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(8)
+% plot(t,mq8)
+% title('mq8');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(9)
+% plot(t,mq135)
+% title('mq135');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% %plots loglogs of full data
+% figure(10)
+% loglog(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
+% title('All Lines');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+%
+% figure(11)
+% loglog(t,mq2)
+% title('mq2');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(12)
+% loglog(t,mq3)
+% title('mq3');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(13)
+% loglog(t,mq4)
+% title('mq4');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(14)
+% loglog(t,mq5)
+% title('mq5');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(15)
+% loglog(t,mq6)
+% title('mq6');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(16)
+% loglog(t,mq7)
+% title('mq7');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(17)
+% loglog(t,mq8)
+% title('mq8');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(18)
+% loglog(t,mq135)
+% title('mq135');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+
+%plots cut values
+figure(19)
+plot(cmq2t,cutmq2,'r',cmq3t,cutmq3,'g',cmq4t,cutmq4,'b',cmq5t,cutmq5,'c',cmq6t,cutmq6,'m',cmq7t,cutmq7,'y',cmq8t,cutmq8,'k',cmq135t,cutmq135,'r*',cmq135t,cutmq135,'r');
+title('All Lines');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+
+figure(20)
+plot(cmq2t,cutmq2,'b',cmq2t,pmq2(3).*cmq2t.^pmq2(4),'r*')
+title('mq2');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(21)
+plot(cmq3t,cutmq3,cmq3t,pmq3(3).*cmq3t.^pmq3(4),'r*')
+title('mq3');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(22)
+plot(cmq4t,cutmq4,cmq4t,pmq4(3).*cmq4t.^pmq4(4),'r*')
+title('mq4');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(23)
+plot(cmq5t,cutmq5,cmq5t,pmq5(3).*cmq5t.^pmq5(4),'r*')
+title('mq5');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(24)
+plot(cmq6t,cutmq6,cmq6t,pmq6(3).*cmq6t.^pmq6(4),'r*')
+title('mq6');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(25)
+plot(cmq7t,cutmq7,cmq7t,pmq7(3).*cmq7t.^pmq7(4),'r*')
+title('mq7');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(26)
+plot(cmq8t,cutmq8,cmq8t,pmq8(3).*cmq8t.^pmq8(4),'r*')
+title('mq8');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(27)
+plot(cmq135t,cutmq135,cmq135t,pmq135(3).*cmq135t.^pmq135(4),'r*')
+title('mq135');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+% %plots loglogs of cut values
+% figure(28)
+% loglog(cmq2t,cutmq2,'r',cmq3t,cutmq3,'g',cmq4t,cutmq4,'b',cmq5t,cutmq5,'c',cmq6t,cutmq6,'m',cmq7t,cutmq7,'y',cmq8t,cutmq8,'k',cmq135t,cutmq135,'r*',cmq135t,cutmq135,'r');
+% title('All Lines');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+%
+% figure(29)
+% loglog(cmq2t,cutmq2)
+% title('mq2');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(30)
+% loglog(cmq3t,cutmq3)
+% title('mq3');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(31)
+% loglog(cmq4t,cutmq4)
+% title('mq4');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(32)
+% loglog(cmq5t,cutmq5)
+% title('mq5');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(33)
+% loglog(cmq6t,cutmq6)
+% title('mq6');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(34)
+% loglog(cmq7t,cutmq7)
+% title('mq7');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(35)
+% loglog(cmq8t,cutmq8)
+% title('mq8');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+%
+% figure(36)
+% loglog(cmq135t,cutmq135)
+% title('mq135');
+% grid();
+% xlabel('Time (seconds)');
+% ylabel('Voltage (Millivolts)');
+
+
+param1 = [pmq2(1)
+    pmq3(1)
+    pmq4(1)
+    pmq5(1)
+    pmq6(1)
+    pmq7(1)
+    pmq8(1)
+    pmq135(1)]
+param2 = [pmq2(2)
+    pmq3(2)
+    pmq4(2)
+    pmq5(2)
+    pmq6(2)
+    pmq7(2)
+    pmq8(2)
+    pmq135(2)]
+param3 = [pmq2(3)
+    pmq3(3)
+    pmq4(3)
+    pmq5(3)
+    pmq6(3)
+    pmq7(3)
+    pmq8(3)
+    pmq135(3)]
+param4 = [pmq2(4)
+    pmq3(4)
+    pmq4(4)
+    pmq5(4)
+    pmq6(4)
+    pmq7(4)
+    pmq8(4)
+    pmq135(4)]
+figure(37)
+bar([2:9],param1)
+title('slopes')
+figure(38)
+bar([2:9],param2)
+title('intercepts')
+figure(39)
+bar([2:9],param3)
+title('alphas')
+figure(40)
+bar([2:9],param4)
+title('betas')
