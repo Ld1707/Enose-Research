@@ -1,0 +1,4 @@
+function [m,b] = para(cut,t)
+p = polyfit(cut,lo);
+m = p(1) % slope
+b = p(2) % intercept
