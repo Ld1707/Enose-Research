@@ -1,4 +1,4 @@
-function [parameters] = EnosePlot(Data)
+function [parameters] = EnosePlotscaled(Data)
 t = Data(:,1);
 mq2 = Data(:,2);
 mq3 = Data(:,3);
@@ -9,15 +9,15 @@ mq7 = Data(:,7);
 mq8 = Data(:,8);
 mq135 = Data(:,9);
 
-logt = log(Data(:,1));
-logmq2 = log(Data(:,2));
-logmq3 = log(Data(:,3));
-logmq4 = log(Data(:,4));
-logmq5 = log(Data(:,5));
-logmq6 = log(Data(:,6));
-logmq7 = log(Data(:,7));
-logmq8 = log(Data(:,8));
-logmq135 = log(Data(:,9));
+% logt = log(Data(:,1));
+% logmq2 = log(Data(:,2));
+% logmq3 = log(Data(:,3));
+% logmq4 = log(Data(:,4));
+% logmq5 = log(Data(:,5));
+% logmq6 = log(Data(:,6));
+% logmq7 = log(Data(:,7));
+% logmq8 = log(Data(:,8));
+% logmq135 = log(Data(:,9));
 
 %cuts only rising portion of data:
 min2 = find(mq2 == min(mq2));
@@ -86,135 +86,135 @@ cutmq135 = cutmq135-min(mq135);
 %as a vector [m,b,alpha,beta]
 
 
-% %plots regular full graphs
-% figure(1)
-% plot(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
-% title('All Lines');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
-%
-% figure(2)
-% plot(t,mq2)
-% title('mq2');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(3)
-% plot(t,mq3)
-% title('mq3');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(4)
-% plot(t,mq4)
-% title('mq4');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(5)
-% plot(t,mq5)
-% title('mq5');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(6)
-% plot(t,mq6)
-% title('mq6');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(7)
-% plot(t,mq7)
-% title('mq7');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(8)
-% plot(t,mq8)
-% title('mq8');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(9)
-% plot(t,mq135)
-% title('mq135');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% %plots loglogs of full data
-% figure(10)
-% loglog(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
-% title('All Lines');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
-%
-% figure(11)
-% loglog(t,mq2)
-% title('mq2');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(12)
-% loglog(t,mq3)
-% title('mq3');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(13)
-% loglog(t,mq4)
-% title('mq4');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(14)
-% loglog(t,mq5)
-% title('mq5');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(15)
-% loglog(t,mq6)
-% title('mq6');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(16)
-% loglog(t,mq7)
-% title('mq7');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(17)
-% loglog(t,mq8)
-% title('mq8');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(18)
-% loglog(t,mq135)
-% title('mq135');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
+%plots regular full graphs
+figure(1)
+plot(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
+title('All Lines');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+
+figure(2)
+plot(t,mq2)
+title('mq2');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(3)
+plot(t,mq3)
+title('mq3');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(4)
+plot(t,mq4)
+title('mq4');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(5)
+plot(t,mq5)
+title('mq5');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(6)
+plot(t,mq6)
+title('mq6');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(7)
+plot(t,mq7)
+title('mq7');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(8)
+plot(t,mq8)
+title('mq8');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(9)
+plot(t,mq135)
+title('mq135');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+%plots loglogs of full data
+figure(10)
+loglog(t,mq2,'r',t,mq3,'g',t,mq4,'b',t,mq5,'c',t,mq6,'m',t,mq7,'y',t,mq8,'k',t,mq135,'r*',t,mq135,'r');
+title('All Lines');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
+
+figure(11)
+loglog(t,mq2)
+title('mq2');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(12)
+loglog(t,mq3)
+title('mq3');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(13)
+loglog(t,mq4)
+title('mq4');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(14)
+loglog(t,mq5)
+title('mq5');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(15)
+loglog(t,mq6)
+title('mq6');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(16)
+loglog(t,mq7)
+title('mq7');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(17)
+loglog(t,mq8)
+title('mq8');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(18)
+loglog(t,mq135)
+title('mq135');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
 
 %plots cut values
 figure(19)
@@ -281,71 +281,70 @@ grid();
 xlabel('Time (seconds)');
 ylabel('Voltage (Millivolts)');
 
-% %plots loglogs of cut values
-% figure(28)
-% loglog(cmq2t,cutmq2,'r',cmq3t,cutmq3,'g',cmq4t,cutmq4,'b',cmq5t,cutmq5,'c',cmq6t,cutmq6,'m',cmq7t,cutmq7,'y',cmq8t,cutmq8,'k',cmq135t,cutmq135,'r*',cmq135t,cutmq135,'r');
-% title('All Lines');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-% legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
-%
-% figure(29)
-% loglog(cmq2t,cutmq2)
-% title('mq2');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(30)
-% loglog(cmq3t,cutmq3)
-% title('mq3');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(31)
-% loglog(cmq4t,cutmq4)
-% title('mq4');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(32)
-% loglog(cmq5t,cutmq5)
-% title('mq5');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(33)
-% loglog(cmq6t,cutmq6)
-% title('mq6');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(34)
-% loglog(cmq7t,cutmq7)
-% title('mq7');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(35)
-% loglog(cmq8t,cutmq8)
-% title('mq8');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
-%
-% figure(36)
-% loglog(cmq135t,cutmq135)
-% title('mq135');
-% grid();
-% xlabel('Time (seconds)');
-% ylabel('Voltage (Millivolts)');
+%plots loglogs of cut values
+figure(28)
+loglog(cmq2t,cutmq2,'r',cmq3t,cutmq3,'g',cmq4t,cutmq4,'b',cmq5t,cutmq5,'c',cmq6t,cutmq6,'m',cmq7t,cutmq7,'y',cmq8t,cutmq8,'k',cmq135t,cutmq135,'r*',cmq135t,cutmq135,'r');
+title('All Lines');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+legend('mq2','mq3','mq4','mq5','mq6','mq7','mq8','mq135');
 
+figure(29)
+loglog(cmq2t,cutmq2)
+title('mq2');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(30)
+loglog(cmq3t,cutmq3)
+title('mq3');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(31)
+loglog(cmq4t,cutmq4)
+title('mq4');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(32)
+loglog(cmq5t,cutmq5)
+title('mq5');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(33)
+loglog(cmq6t,cutmq6)
+title('mq6');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(34)
+loglog(cmq7t,cutmq7)
+title('mq7');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(35)
+loglog(cmq8t,cutmq8)
+title('mq8');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
+
+figure(36)
+loglog(cmq135t,cutmq135)
+title('mq135');
+grid();
+xlabel('Time (seconds)');
+ylabel('Voltage (Millivolts)');
 
 param1 = [pmq2(1)
     pmq3(1)
@@ -354,7 +353,7 @@ param1 = [pmq2(1)
     pmq6(1)
     pmq7(1)
     pmq8(1)
-    pmq135(1)]
+    pmq135(1)];
 param2 = [pmq2(2)
     pmq3(2)
     pmq4(2)
@@ -362,7 +361,7 @@ param2 = [pmq2(2)
     pmq6(2)
     pmq7(2)
     pmq8(2)
-    pmq135(2)]
+    pmq135(2)];
 param3 = [pmq2(3)
     pmq3(3)
     pmq4(3)
@@ -370,7 +369,7 @@ param3 = [pmq2(3)
     pmq6(3)
     pmq7(3)
     pmq8(3)
-    pmq135(3)]
+    pmq135(3)];
 param4 = [pmq2(4)
     pmq3(4)
     pmq4(4)
@@ -378,16 +377,16 @@ param4 = [pmq2(4)
     pmq6(4)
     pmq7(4)
     pmq8(4)
-    pmq135(4)]
-figure(37)
-bar([2:9],param1)
-title('slopes')
-figure(38)
-bar([2:9],param2)
-title('intercepts')
-figure(39)
-bar([2:9],param3)
-title('alphas')
-figure(40)
-bar([2:9],param4)
-title('betas')
+    pmq135(4)];
+figure(37);
+bar((2:9),param1);
+title('slopes');
+figure(38);
+bar((2:9),param2);
+title('intercepts');
+figure(39);
+bar((2:9),param3);
+title('alphas');
+figure(40);
+bar((2:9),param4);
+title('betas');
