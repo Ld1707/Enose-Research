@@ -27,4 +27,41 @@ function [] = graphies(Paras)
     xlabel('Time');
     legend show;
     hold off;
+    
+    figure;
+    hold on;
+    x = [];
+    disp(length(Paras))
+    for i = 1:length(Paras)/8
+        x = [x,1:8];
+    end
+    P = Paras';
+    P = [x
+        P];
+    P = P';
+    disp(P);
+    for i = 1:length(Paras)/8
+        for j = 1:8
+            for x = 2:5
+                if x == 2
+                    %figure(3)
+                    scatter(j,P(i*j,x),50,'r','filled');
+                elseif x == 3
+                    %figure(3)
+                    scatter(j,P(i*j,x),50,'g','filled');
+                elseif x == 4 
+                    %figure(4)
+                    scatter(j,P(i*j,x),50,'b','filled');
+                elseif x == 5
+                    %figure(4)
+                    scatter(j,P(i*j,x),50,'k','filled');
+                end
+            end
+        end
+    end
+    title('Parameter comparisons');
+    ylabel('Parameters');
+    xlabel('Sensors');
+    legend('slope','intercept','alpha','beta');
+    hold off;
 end
